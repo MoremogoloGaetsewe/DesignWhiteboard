@@ -1,0 +1,157 @@
+ <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th></th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        
+        <td>John Doe</td>
+        <td>john.doe@example.com</td>
+        <td>123-456-7890</td>
+        <td>123 Main St</td>
+        <td className="meatball-icons" ref={dropdownRef}>
+              <Dropdown show={isOpen} onToggle={handleDropdownToggle}>
+                <Dropdown.Toggle variant="link" id="dropdown-basic">
+                  <FontAwesomeIcon icon={faEllipsisH} />
+                </Dropdown.Toggle>
+            { isOpen && (
+                <Dropdown.Menu>
+                <div className="dropdown-items">
+                  <Dropdown.Item>Edit</Dropdown.Item>
+                  <Dropdown.Item>Delete</Dropdown.Item>
+                  </div>
+                </Dropdown.Menu>)}
+              </Dropdown>
+            </td>
+      </tr>
+      
+     <tr></tr>
+
+     
+     
+    </tbody>
+  </table>
+</div>
+
+
+
+import React,{useEffect, useRef, useState} from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Dropdown,Accordion, Card } from 'react-bootstrap';
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+function Students(){
+
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef(null);
+  
+    useEffect(() => {
+      // Close dropdown when clicking outside of it
+      console.log(isOpen)
+      const handleOutsideClick = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+          setIsOpen(false);
+          
+        }
+      };
+  
+      document.addEventListener('mousedown', handleOutsideClick);
+  
+      return () => {
+        document.removeEventListener('mousedown', handleOutsideClick);
+      };
+    }, [isOpen]);
+  
+    const handleDropdownToggle = () => {
+      setIsOpen(!isOpen);
+    };
+
+
+    return(
+        
+<div className='content'>
+<form class="search-form">
+    <input className='search' type="search" placeholder="Search for student..." />
+    </form>
+    <div className="student-container">
+    <div class="table-container">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th></th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        
+        <td>John Doe</td>
+        <td>john.doe@example.com</td>
+        <td>123-456-7890</td>
+        <td>123 Main St</td>
+        <td className="meatball-icons" ref={dropdownRef}>
+              <Dropdown onToggle={handleDropdownToggle}>
+                <Dropdown.Toggle variant="link" id="dropdown-basic">
+                  <FontAwesomeIcon icon={faEllipsisH} />
+                </Dropdown.Toggle>
+            
+                {isOpen &&( <Dropdown.Menu>
+                 
+                <div className="dropdown-items">
+                  <Dropdown.Item>Edit</Dropdown.Item>
+                  <Dropdown.Item>Delete</Dropdown.Item>
+                  </div>
+                </Dropdown.Menu>)}
+              </Dropdown>
+            </td>
+      </tr>
+      <tr>
+        
+        <td>John Doe</td>
+        <td>john.doe@example.com</td>
+        <td>123-456-7890</td>
+        <td>123 Main St</td>
+        <td className="meatball-icons" ref={dropdownRef}>
+              <Dropdown  onToggle={handleDropdownToggle}>
+                <Dropdown.Toggle variant="link" id="dropdown-basic">
+                  <FontAwesomeIcon icon={faEllipsisH} />
+                </Dropdown.Toggle>
+                {isOpen &&( 
+                <Dropdown.Menu>
+                <div className="dropdown-items">
+                  <Dropdown.Item>Edit</Dropdown.Item>
+                  <Dropdown.Item>Delete</Dropdown.Item>
+                  </div>
+                </Dropdown.Menu>)}
+              </Dropdown>
+            </td>
+      </tr>
+      
+     <tr></tr>
+
+     
+     
+    </tbody>
+  </table>
+</div>
+
+        
+    </div>
+  
+    </div>
+    )
+
+
+}
+
+export default Students;
