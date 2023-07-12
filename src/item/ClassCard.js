@@ -6,11 +6,11 @@ import {useNavigate} from 'react-router-dom'
 
 
 
-function ClassCard() {
+function ClassCard({id, name}) {
 
 const navigate = useNavigate();
 const handleClick=()=>{
-navigate('/room/1')
+navigate(`/room/${id}`)
 }
 
 return (
@@ -24,7 +24,7 @@ return (
     </div>
 <div className="classInfoContainer">
    
-<h2 className='test'> Maths Grade 11</h2>
+<h2 className='test'> {name}</h2>
 
 
 

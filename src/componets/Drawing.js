@@ -1,151 +1,10 @@
- <table class="data-table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Address</th>
-        <th></th>
-        
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        
-        <td>John Doe</td>
-        <td>john.doe@example.com</td>
-        <td>123-456-7890</td>
-        <td>123 Main St</td>
-        <td className="meatball-icons" ref={dropdownRef}>
-              <Dropdown show={isOpen} onToggle={handleDropdownToggle}>
-                <Dropdown.Toggle variant="link" id="dropdown-basic">
-                  <FontAwesomeIcon icon={faEllipsisH} />
-                </Dropdown.Toggle>
-            { isOpen && (
-                <Dropdown.Menu>
-                <div className="dropdown-items">
-                  <Dropdown.Item>Edit</Dropdown.Item>
-                  <Dropdown.Item>Delete</Dropdown.Item>
-                  </div>
-                </Dropdown.Menu>)}
-              </Dropdown>
-            </td>
-      </tr>
-      
-     <tr></tr>
-
-     
-     
-    </tbody>
-  </table>
-</div>
-
-
-
-import React,{useEffect, useRef, useState} from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dropdown,Accordion, Card } from 'react-bootstrap';
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
-function Students(){
-
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef(null);
-  
-    useEffect(() => {
-      // Close dropdown when clicking outside of it
-      console.log(isOpen)
-      const handleOutsideClick = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-          setIsOpen(false);
-          
-        }
-      };
-  
-      document.addEventListener('mousedown', handleOutsideClick);
-  
-      return () => {
-        document.removeEventListener('mousedown', handleOutsideClick);
-      };
-    }, [isOpen]);
-  
-    const handleDropdownToggle = () => {
-      setIsOpen(!isOpen);
-    };
-
-
-    return(
-        
-<div className='content'>
-<form class="search-form">
-    <input className='search' type="search" placeholder="Search for student..." />
-    </form>
-    <div className="student-container">
-    <div class="table-container">
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Address</th>
-        <th></th>
-        
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        
-        <td>John Doe</td>
-        <td>john.doe@example.com</td>
-        <td>123-456-7890</td>
-        <td>123 Main St</td>
-        <td className="meatball-icons" ref={dropdownRef}>
-              <Dropdown onToggle={handleDropdownToggle}>
-                <Dropdown.Toggle variant="link" id="dropdown-basic">
-                  <FontAwesomeIcon icon={faEllipsisH} />
-                </Dropdown.Toggle>
-            
-                {isOpen &&( <Dropdown.Menu>
-                 
-                <div className="dropdown-items">
-                  <Dropdown.Item>Edit</Dropdown.Item>
-                  <Dropdown.Item>Delete</Dropdown.Item>
-                  </div>
-                </Dropdown.Menu>)}
-              </Dropdown>
-            </td>
-      </tr>
-      <tr>
-        
-        <td>John Doe</td>
-        <td>john.doe@example.com</td>
-        <td>123-456-7890</td>
-        <td>123 Main St</td>
-        <td className="meatball-icons" ref={dropdownRef}>
-              <Dropdown  onToggle={handleDropdownToggle}>
-                <Dropdown.Toggle variant="link" id="dropdown-basic">
-                  <FontAwesomeIcon icon={faEllipsisH} />
-                </Dropdown.Toggle>
-                {isOpen &&( 
-                <Dropdown.Menu>
-                <div className="dropdown-items">
-                  <Dropdown.Item>Edit</Dropdown.Item>
-                  <Dropdown.Item>Delete</Dropdown.Item>
-                  </div>
-                </Dropdown.Menu>)}
-              </Dropdown>
-            </td>
-      </tr>
-      
-     <tr></tr>
-
-
-     import React, {useRef, useEffect, useState,useContext} from 'react';
+import React, {useRef, useEffect, useState,useContext} from 'react';
 import { fabric } from 'fabric';
 
 import { SketchPicker } from 'react-color';
 import '../App.css'
 import { v4 as uuidv4 } from 'uuid'
+import CanvasToolBar from '../item/CanvasToolBar';
 
 const Drawing = ({socket, roomId, canvasState1}) => {
  
@@ -196,9 +55,10 @@ const Drawing = ({socket, roomId, canvasState1}) => {
      
      
     if(canvasLoaded.current){
-console.log('canload',canvasLoaded.current)
-canvasLoaded.current=false;
-}
+console.log('canload1',canvasLoaded.current)
+
+
+
     for(const key in canvasState1)
     {
       
@@ -210,7 +70,8 @@ canvasLoaded.current=false;
     
      
     }
-   
+    
+  }
 
 
 
@@ -416,7 +277,7 @@ canvasLoaded.current=false;
 
 
   return <div ref={canvasContainer } className='canvas-container'>
-
+<CanvasToolBar writeButton={writeButton} eraseButton={eraseButton } UndoButton={UndoButton} RedoButton={RedoButton}/>
   <canvas ref={canvasRef} className='canvas' />
 
   </div>;
@@ -424,20 +285,3 @@ canvasLoaded.current=false;
 };
 
 export default Drawing;
-
-     
-     
-    </tbody>
-  </table>
-</div>
-
-        
-    </div>
-  
-    </div>
-    )
-
-
-}
-
-export default Students;
