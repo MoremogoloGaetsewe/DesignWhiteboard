@@ -423,6 +423,18 @@ canvasLoaded.current=false;
  
 };
 
+<div className='chat'>
+        <div  className='Participant-container-other'>
+           
+            <p className='test'>&nbsp; Lebone Gaetsewe&nbsp; </p>
+            <div className='classMemberIcon-container'>
+                <div className='classMemberIcon-circle'></div>
+            </div>
+        </div>
+
+            <div className='other-user-chatBubble'><p className='chat-text-other-user'>Hello More, im Lebone</p></div>
+        </div>
+
 export default Drawing;
 
      

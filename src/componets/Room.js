@@ -5,16 +5,19 @@ import CanvasToolBar from '../item/CanvasToolBar';
 import {useParams} from 'react-router-dom'
 import Drawing from './Drawing'
 import RoomSideBar from '../item/RoomSideBar';
+import { Prev } from 'react-bootstrap/esm/PageItem';
 
 
 
-function Room({socket}){
+function Room({socket, user}){
 
-    const {roomId} = useParams()
-    const [allowed, setAllowed]=useState(false)
+    const {roomId} = useParams();
+    const [allowed, setAllowed]=useState(false);
     const [onlineUsers, setOnlineUsers]=useState({});
-    const [canvasState, setCanvasState]=useState({})
-    const [ready, setReady]=useState(false)
+    const [canvasState, setCanvasState]=useState({});
+    const [ready, setReady]=useState(false);
+    const [messages, setMessages]=useState({});
+  const [sessionMessages, setSessionMessages] = useState([]);
     useEffect(()=>{
         socket.emit('accessRequest',roomId)
         console.log('usee')
@@ -48,7 +51,26 @@ function Room({socket}){
             socket.emit('canvasStateReq', roomId)
             socket.emit('activeUsersReq', roomId)
             socket.emit('JoinRoom', roomId)
+          
           }
+
+
+          const ResMessages=(Rmessages)=>{
+            setMessages(Rmessages)
+
+          }
+
+          const ReceicedMessage = (message , UserName)=>{
+            console.log('here', message)
+          
+            
+                  
+                  setSessionMessages((prevMessages)=>
+                   
+                     [...prevMessages, {[UserName]:message}]
+                  )
+          }
+     
 
 
     const loadRoomData= (msg) => {
@@ -64,6 +86,9 @@ function Room({socket}){
 
           socket.on('loadRoomData',loadRoomData);
           socket.on('activeUsersRes', activeUsersReq)
+          socket.on('ResMessages', ResMessages)
+
+          socket.on('sendMessage', ReceicedMessage)
           
         return () =>{
             socket.off('accessResponse',accessResponse)
@@ -71,11 +96,14 @@ function Room({socket}){
             socket.off('connect', connect);
             socket.off('canvasStateRes',canvasStateRes)
             socket.off('loadRoomData',loadRoomData);
+            socket.on('ResMessages', ResMessages)
+            socket.off('sendMessage', ReceicedMessage);
 
         } 
     },[])
 
     useEffect(() => {
+      console.log('atfer',sessionMessages)
         const handleBeforeUnload = (event) => {
           event.preventDefault();
           // Display a confirmation dialog
@@ -88,8 +116,16 @@ function Room({socket}){
         return () => {
           window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-      }, []);
+      }, [sessionMessages]);
 
+      function sendMessage(message)
+      {
+        console.log("sent")
+        socket.emit('sendMessage', message, roomId, user.uid)
+      }
+      function micControl(userId){
+
+      }
 
 return (
     <div className='container'>
@@ -97,11 +133,11 @@ return (
     <div className="canvas-content">
       
       
-        <Drawing socket={socket} roomId={roomId} canvasState1={canvasState}/>
+        <Drawing socket={socket} roomId={roomId} canvasState1={canvasState} />
         
         <div className='left-room-container'>
-            <PartcipantCard/>
-            <MessagesCard/>
+            <PartcipantCard onlineUsers={onlineUsers} micControl={micControl}/>
+            <MessagesCard messages={messages} sessionMessages={sessionMessages} sendMessage={sendMessage} />
         </div>
     </div>
     </div>

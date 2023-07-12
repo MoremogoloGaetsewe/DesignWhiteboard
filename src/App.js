@@ -76,7 +76,7 @@ function App() {
       <Route path='/students' element={<Students/>}/>
       <Route
           path="/room/:roomId"
-          element={socket?<Room socket={socket}/> : <Loading/>}
+          element={socket?<Room socket={socket} user={user}/> : <Loading/>}
       />
   </Routes>
 
