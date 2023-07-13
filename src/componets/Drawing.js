@@ -138,6 +138,7 @@ console.log('canload1',canvasLoaded.current)
 
 
   const handleClearCanvas = (act)=>{
+    console.log('herenow')
     if(canvasF){
       
     canvasF.clear();
@@ -248,8 +249,8 @@ console.log('canload1',canvasLoaded.current)
   }
 
   const clearButton = () =>{
-  
-    socket.emit('action', 'clear')
+    console.log('clear')
+    socket.emit('action', 'clear',  roomId)
   }
   
   const UndoButton= () => {
@@ -270,6 +271,11 @@ console.log('canload1',canvasLoaded.current)
      
     }
   }
+  const GrabButton=() =>{
+
+    canvasF.isDrawingMode=false;
+
+  }
 
   const SaveButton = ()=>{
     socket.emit('action', 'save', roomId)
@@ -277,7 +283,7 @@ console.log('canload1',canvasLoaded.current)
 
 
   return <div ref={canvasContainer } className='canvas-container'>
-<CanvasToolBar writeButton={writeButton} eraseButton={eraseButton } UndoButton={UndoButton} RedoButton={RedoButton}/>
+<CanvasToolBar writeButton={writeButton} eraseButton={eraseButton } UndoButton={UndoButton} RedoButton={RedoButton} clearButton={clearButton} handleColorChange={handleColorChange} brushColor={brushColor} GrabButton={GrabButton}/>
   <canvas ref={canvasRef} className='canvas' />
 
   </div>;

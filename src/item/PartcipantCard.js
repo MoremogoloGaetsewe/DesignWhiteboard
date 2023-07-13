@@ -9,8 +9,11 @@ function PartcipantCard( {micControl, onlineUsers}){
         <div className="participants-container"><div className="Chat-Participants-Headings-container" >
         <h3 className='Chat-Participants-Headings'>Participants</h3>
         </div><div className='Participants-items'>
-            <Participant micControl={micControl}/>
-        <Participant micControl={micControl}/>
+        {Object.entries(onlineUsers).map(([key, value]) => 
+        (
+            <Participant micControl={micControl} userId={key} userName={value}/>
+        ))}
+            
         
         </div><h4> view all Participants</h4></div>)
 }

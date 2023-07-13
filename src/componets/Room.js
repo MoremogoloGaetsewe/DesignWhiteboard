@@ -26,7 +26,7 @@ function Room({socket, user}){
             setAllowed(true)
             socket.emit('JoinRoom', roomId)
             console.log('join');
-            //socket.emit('activeUsersReq', roomId)
+            
         }
 
         const activeUsersReq = (onlineUsers) =>{
@@ -56,23 +56,24 @@ function Room({socket, user}){
 
 
           const ResMessages=(Rmessages)=>{
+            console.log('hereabd', Rmessages)
             setMessages(Rmessages)
 
           }
 
-          const ReceicedMessage = (message , UserName)=>{
+          const ReceicedMessage = (message , UserName, userId)=>{
             console.log('here', message)
           
             
                   
                   setSessionMessages((prevMessages)=>
                    
-                     [...prevMessages, {[UserName]:message}]
+                     [...prevMessages, {[userId]:{[UserName]:message}}]
                   )
           }
      
 
-
+          
     const loadRoomData= (msg) => {
         setReady(true)
     }
@@ -116,13 +117,15 @@ function Room({socket, user}){
         return () => {
           window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-      }, [sessionMessages]);
+      }, [sessionMessages, messages, onlineUsers]);
 
       function sendMessage(message)
       {
         console.log("sent")
         socket.emit('sendMessage', message, roomId, user.uid)
       }
+
+   
       function micControl(userId){
 
       }
@@ -137,7 +140,7 @@ return (
         
         <div className='left-room-container'>
             <PartcipantCard onlineUsers={onlineUsers} micControl={micControl}/>
-            <MessagesCard messages={messages} sessionMessages={sessionMessages} sendMessage={sendMessage} />
+            <MessagesCard messages={messages} sessionMessages={sessionMessages} sendMessage={sendMessage} user={user} />
         </div>
     </div>
     </div>
